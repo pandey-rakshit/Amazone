@@ -1,0 +1,39 @@
+{
+  "name": "amazone",
+  "version": "1.0.0",
+  "description": "E-commerse Website",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pandey-rakshit/Amazone.git"
+  },
+  "keywords": [
+    "Amazone",
+    "maongodb"
+  ],
+  "author": "pandey-rakshit",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pandey-rakshit/Amazone/issues"
+  },
+  "homepage": "https://github.com/pandey-rakshit/Amazone#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "axios": "^0.24.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.1",
+    "connect-mongodb-session": "^3.1.1",
+    "dotenv": "^10.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.2",
+    "express-session": "^1.17.2",
+    "mongoose": "^6.1.2",
+    "morgan": "^1.10.0"
+  }
+}

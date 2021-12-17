@@ -1,0 +1,25 @@
+<%- include('include/_header') %>
+
+<section id="login" class="text-center">
+    <main class="form-signin">
+        <form action="" method="POST">
+            <a href="/"><img class="mb-4" src="img/logo.png" alt="Amazone" width="150" height="150"></a>
+            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+            <div class="form-floating">
+                <input type="email" class="form-control" id="userEmail" placeholder="name@mail.com" required>
+                <label for="userEmail">Email address</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="confirmPassword" placeholder="Password" required="">
+                <label for="confirmPassword">Password</label>
+            </div>
+
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+        </form>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="/signup">New around here? Sign up</a>
+        
+    </main>
+</section>
+
+<%- include('include/_footer') %>
