@@ -1,0 +1,29 @@
+<%- include('../include/_header') %>
+
+<section id="edit-product" class="text-center">
+    <main class="form_add-product">
+        <form action="/add-product" method="POST">
+            <a href="/"><img class="mb-4" src="img/logo.png" alt="Amazone" width="150" height="150"></a>
+            <h1 class="h3 mb-3 fw-normal">Add Product</h1>
+            <div class="form-floating">
+                <input type="text" class="form-control" id="productTitle" name="productTitle" placeholder="Product Title" required>
+                <label for="productTitle">Product Title</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" class="form-control" id="productImage" name="productImage" placeholder="Product Image" required="">
+                <label for="productImage">Product Image</label>
+            </div>
+            <div class="form-floating">
+                <input type="number" class="form-control" id="productPrice" name="productPrice" placeholder="Product Price" required="">
+                <label for="productPrice">Product Price</label>
+            </div>
+            
+
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Add-Product</button>
+        </form>
+        <div class="dropdown-divider"></div>
+    </main>
+</section>
+
+
+<%- include('../include/_footer') %>

@@ -9,8 +9,14 @@ const path = require('path');
 const app = express();
 
 const connectDB = require('./server/database/connection');
-const authRoutes = require('./server/routers/auth');
+const errorController = require('./server/controllers/error');
+
 const User = require('./server/models/user');
+
+const authRoutes = require('./server/routers/auth');
+const shopRoutes = require('./server/routers/shop');
+const adminRoutes = require('./server/routers/admin');
+
 
 dotenv.config({path:'config.env'}) 
 const Port = process.env.PORT || 8080
@@ -21,7 +27,7 @@ const store = new MongoDBStore({
 });
 
 // log request
-app.use(morgan('tiny'));
+// app.use(morgan('tiny'));
 
 // MongoDB Connection
 connectDB();
@@ -47,7 +53,6 @@ app.use(
     })
   );
 
-
   app.use((req, res, next) => {
     if (!req.session.user) {
       return next();
@@ -61,14 +66,12 @@ app.use(
   });
 
 
+app.use(adminRoutes);
 app.use(authRoutes);
-// app.use(errorController.get404);
+app.use(shopRoutes);
 
-app.get('/', (req,res)=>{
-    res.render('index', {pageTitle:'HOME'});
-})
-
+app.use(errorController.get404);
 
 app.listen(Port,()=>{
     console.log(`Server is live at http://localhost:${Port}`);
-})
+});
