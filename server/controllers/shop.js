@@ -25,7 +25,7 @@ exports.postCart = (req, res) => {
       return req.user.addToCart(product);
     })
     .then(result => {
-      console.log(result);
+      // console.log(result);
       res.redirect('/cart');
     });
 };
@@ -66,10 +66,19 @@ exports.postOrder = (req, res) => {
       const products = user.cart.items.map(i => {
         return { quantity: i.quantity, product: { ...i.productId._doc } };
       });
-      const totalPrice = 300;
+      var totalNetPrice = 0;
+      products.forEach(product =>{
+        
+        const Price = product.product.productPrice;
+        const quantity = product.quantity;
+        totalNetPrice += Price * quantity; 
+      
+      });
+
+      totalPrice = totalNetPrice;
       const order = new Order({
         user: {
-          userName: req.user.userName,
+          userName: req.user,
           userId: req.user
         },
         totalPrice:totalPrice,
