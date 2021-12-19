@@ -1,0 +1,41 @@
+<%- include('../include/_header') %>
+    
+    <main>
+        <div class="container">
+        <section id="card-container">
+            <div class="container">
+                <!-- <div class="container featured-products"><h2>Cart Products</h2></div> -->
+                <div class="row">
+                    <!-- card 1 -->
+                    <% if (products.length > 0) { %>
+                        <% products.forEach(product => { %>
+                            <div class="col-4">
+                                <div class="card text-center">
+                                    <img src="<%= product.productImage %>" alt="productImage" class="card-img-top">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><%= product.productTitle%></h5>
+                                        <p class="card-text">Rs. <%= product.productPrice %></p>
+                                        <p class="card-text">Quantity <%= product.quantity %></p>
+                                        <form action="/cart-delete-item" method="POST">
+                                            <input type="hidden" value="<%= p.productId._id %>" name="productId">
+                                            <button class="btn btn-danger" type="submit">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }) %>
+
+                            <div class="centered">
+                                <form action="/create-order" method="POST">
+                                    <button type="submit" class="btn">Order Now!</button>
+                                </form>
+                            </div>
+
+                    <% } else { %>
+                        <h1>Cart is Empty!</h1>
+                        <% } %>
+                </div>
+            </div>
+        </section>
+        </main>
+<%- include('../include/_footer') %>

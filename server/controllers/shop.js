@@ -18,4 +18,30 @@ exports.getIndex = (req, res, next) => {
     });
 };
 
+exports.postCart = (req, res) => {
+  const prodId = req.body.productId;
+  Product.findById(prodId)
+    .then(product => {
+      return req.user.addToCart(product);
+    })
+    .then(result => {
+      console.log(result);
+      res.redirect('/cart');
+    });
+};
 
+exports.getCart = (req, res) => {
+  req.user
+    .populate('cart.items.productId')
+    // .execPopulate()
+    .then(user => {
+      const products = user.cart.items;
+      res.render('shop/cart', {
+        path: '/cart',
+        pageTitle: 'Your Cart',
+        products: products,
+        isAuthenticated: req.session.isLoggedIn
+      });
+    })
+    .catch(err => console.log(err));
+};
