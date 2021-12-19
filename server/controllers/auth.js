@@ -52,7 +52,11 @@ exports.postSignup = (req, res) => {
   const userEmail = req.body.userEmail;
   const userPassword = req.body.userPassword;
   const confirmPassword = req.body.confirmPassword;
-  User.findOne({ userEmail: userEmail })
+  if( userPassword !== confirmPassword){
+    console.log("password do not match");
+    res.redirect('/signup')
+  }else{
+    User.findOne({ userEmail: userEmail })
     .then(userDoc => {
       if (userDoc) {
         return res.redirect('/signup');
@@ -75,6 +79,8 @@ exports.postSignup = (req, res) => {
     .catch(err => {
       console.log(err);
     });
+  }
+  
 };
 
 exports.postLogout = (req, res) => {
