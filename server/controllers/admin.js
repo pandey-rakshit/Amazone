@@ -1,11 +1,18 @@
 const Product = require('../models/product');
 
 exports.getAddProduct = (req, res) => {
-    res.render('admin/edit-product', {
-      pageTitle: 'Add Product',
-      path: '/add-product',
-      isAuthenticated: req.session.isLoggedIn
-    });
+    if(req.user.userEmail === "admin@amazone.com"){ // admin authentication
+      res.render('admin/edit-product', {
+        pageTitle: 'Add Product',
+        path: '/add-product',
+        isAuthenticated: req.session.isLoggedIn
+      });
+    }
+    else{
+      console.log("admin-rights");
+      res.status(404).redirect('/pagenotfound');
+    }
+    
   };
 
   exports.postAddProduct = (req, res) => {
