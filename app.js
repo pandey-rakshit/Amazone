@@ -1,29 +1,28 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
-const { urlencoded } = require('body-parser');
-const session = require('express-session');
-const MongoDBStore = require('connect-mongodb-session')(session);
-const path = require('path');
+const express = require("express");
+const dotenv = require("dotenv");
+// const morgan = require("morgan");
+const bodyParser = require("body-parser");
+// const { urlencoded } = require("body-parser");
+const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session);
+const path = require("path");
 const app = express();
 
-const connectDB = require('./server/database/connection');
-const errorController = require('./server/controllers/error');
+const connectDB = require("./server/database/connection");
+const errorController = require("./server/controllers/error");
 
-const User = require('./server/models/user');
+const User = require("./server/models/user");
 
-const authRoutes = require('./server/routers/auth');
-const shopRoutes = require('./server/routers/shop');
-const adminRoutes = require('./server/routers/admin');
+const authRoutes = require("./server/routers/auth");
+const shopRoutes = require("./server/routers/shop");
+const adminRoutes = require("./server/routers/admin");
 
-
-dotenv.config({path:'config.env'}) 
-const Port = process.env.PORT || 8080
+dotenv.config({ path: "config.env" });
+const Port = process.env.PORT || 8080;
 
 const store = new MongoDBStore({
   uri: process.env.Mongo_URI,
-  collection: 'sessions'
+  collection: "sessions",
 });
 
 // log request
@@ -33,38 +32,37 @@ const store = new MongoDBStore({
 connectDB();
 
 // bodyParser
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // view engine
 app.set("view engine", "ejs");
 // app.set("views" , path.resolve(__dirname,"views/ejs"))
 
 //load assets
-app.use('/css',express.static(path.resolve(__dirname,"assets/css")))
-app.use('/img',express.static(path.resolve(__dirname,"assets/img")))
-app.use('/js',express.static(path.resolve(__dirname,"assets/js")))
+app.use("/css", express.static(path.resolve(__dirname, "assets/css")));
+app.use("/img", express.static(path.resolve(__dirname, "assets/img")));
+app.use("/js", express.static(path.resolve(__dirname, "assets/js")));
 
 app.use(
-    session({
-      secret: 'my secret',
-      resave: false,
-      saveUninitialized: false,
-      store: store
+  session({
+    secret: "my secret",
+    resave: false,
+    saveUninitialized: false,
+    store: store,
+  })
+);
+
+app.use((req, res, next) => {
+  if (!req.session.user) {
+    return next();
+  }
+  User.findById(req.session.user._id)
+    .then((user) => {
+      req.user = user;
+      next();
     })
-  );
-
-  app.use((req, res, next) => {
-    if (!req.session.user) {
-      return next();
-    }
-    User.findById(req.session.user._id)
-      .then(user => {
-        req.user = user;
-        next();
-      })
-      .catch(err => console.log(err));
-  });
-
+    .catch((err) => console.log(err));
+});
 
 app.use(adminRoutes);
 app.use(authRoutes);
@@ -72,6 +70,6 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-app.listen(Port,()=>{
-    console.log(`Server is live at http://localhost:${Port}`);
+app.listen(Port, () => {
+  console.log(`Server is live at http://localhost:${Port}`);
 });
