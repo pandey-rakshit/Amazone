@@ -30,7 +30,7 @@ jobs:
           echo "NODE_ENV=production" >> $GITHUB_ENV
           echo "PORT=3000" >> $GITHUB_ENV  # Port environment variable
           echo "ADMIN=${{ secrets.ADMIN }}" >> $GITHUB_ENV
-          echo "MONGO_URL=${{ secrets.MONGO_URL }}" >> $GITHUB_ENV
+          echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> $GITHUB_ENV
 
       # Install dependencies
       - name: Install dependencies
@@ -44,4 +44,4 @@ jobs:
         env:
           PORT: ${{ secrets.PORT }}  # Use secret if you defined 'PORT' as a secret
           ADMIN: ${{ secrets.ADMIN }}
-          MONGO_URL: ${{ secrets.MONGO_URL }}
+          MONGO_URI: ${{ secrets.MONGO_URI }}
