@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    # environment: Amazone  # Reference the 'amazone' environment
+    environment: Amazone  # Reference the 'amazone' environment
 
     steps:
       # Check out the code
