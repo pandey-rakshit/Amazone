@@ -1,47 +1,47 @@
-name: Node.js App CI
+# name: Node.js App CI
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+#     branches:
+#       - main
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    environment: Amazone  # Reference the 'amazone' environment
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     environment: Amazone  # Reference the 'amazone' environment
 
-    steps:
-      # Check out the code
-      - name: Checkout code
-        uses: actions/checkout@v2
+#     steps:
+#       # Check out the code
+#       - name: Checkout code
+#         uses: actions/checkout@v2
 
-      # Set up Node.js environment
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
+#       # Set up Node.js environment
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: '16'
 
-      # Set environment variables (without API_URL)
-      - name: Set environment variables from secrets
-        run: |
-          echo "NODE_ENV=production" >> $GITHUB_ENV
-          echo "PORT=3000" >> $GITHUB_ENV  # Port environment variable
-          echo "ADMIN=${{ secrets.ADMIN }}" >> $GITHUB_ENV
-          echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> $GITHUB_ENV
-        env:
-          PORT: 3000
-          ADMIN: ${{ secrets.ADMIN }}
-          MONGO_URI: ${{ secrets.MONGO_URI }}
+#       # Set environment variables (without API_URL)
+#       - name: Set environment variables from secrets
+#         run: |
+#           echo "NODE_ENV=production" >> $GITHUB_ENV
+#           echo "PORT=3000" >> $GITHUB_ENV  # Port environment variable
+#           echo "ADMIN=${{ secrets.ADMIN }}" >> $GITHUB_ENV
+#           echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> $GITHUB_ENV
+#         env:
+#           PORT: 3000
+#           ADMIN: ${{ secrets.ADMIN }}
+#           MONGO_URI: ${{ secrets.MONGO_URI }}
 
-      # Install dependencies
-      - name: Install dependencies
-        run: npm install
+#       # Install dependencies
+#       - name: Install dependencies
+#         run: npm install
 
-      # Example of running the app (using the PORT variable)
-      - name: Run the app
-        run: |
-          echo "Starting app on port $PORT"
-          npm start  # or whatever command starts your app
+#       # Example of running the app (using the PORT variable)
+#       - name: Run the app
+#         run: |
+#           echo "Starting app on port $PORT"
+#           npm start  # or whatever command starts your app
