@@ -1,17 +1,17 @@
 const mongoose = require("mongoose");
 
+mongoose.set("strictQuery", true)
+
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.Mongo_URI, {
+    await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
-      UseUnifiedTopology: true,
-      // useCreateIndex:true
+      useUnifiedTopology: true, // Fixed capitalization
     });
-
-    console.log(`mongodb Connected : ${conn.connection.host}`);
-  } catch (err) {
-    console.log(err);
-    process.exit(1);
+    console.log(`MongoDB Connected: ${mongoose.connection.host}`);
+  } catch (error) {
+    console.error(`Error: ${error.message}`);
+    process.exit(1); // Exit process with failure
   }
 };
 
