@@ -25,12 +25,16 @@ jobs:
           node-version: '16'
 
       # Set environment variables (without API_URL)
-      # - name: Set environment variables from secrets
-      #   run: |
-      #     echo "NODE_ENV=production" >> $GITHUB_ENV
-      #     echo "PORT=3000" >> $GITHUB_ENV  # Port environment variable
-      #     echo "ADMIN=${{ secrets.ADMIN }}" >> $GITHUB_ENV
-      #     echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> $GITHUB_ENV
+      - name: Set environment variables from secrets
+        run: |
+          echo "NODE_ENV=production" >> $GITHUB_ENV
+          echo "PORT=3000" >> $GITHUB_ENV  # Port environment variable
+          echo "ADMIN=${{ secrets.ADMIN }}" >> $GITHUB_ENV
+          echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> $GITHUB_ENV
+        env:
+          PORT: 3000
+          ADMIN: ${{ secrets.ADMIN }}
+          MONGO_URI: ${{ secrets.MONGO_URI }}
 
       # Install dependencies
       - name: Install dependencies
@@ -41,8 +45,3 @@ jobs:
         run: |
           echo "Starting app on port $PORT"
           npm start  # or whatever command starts your app
-        env:
-          # PORT: ${{ secrets.PORT }}  # Use secret if you defined 'PORT' as a secret
-          PORT: 3000
-          ADMIN: ${{ secrets.ADMIN }}
-          MONGO_URI: ${{ secrets.MONGO_URI }}
