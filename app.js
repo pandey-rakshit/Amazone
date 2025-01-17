@@ -21,12 +21,14 @@ dotenv.config({ path: "config.env" });
 const Port = process.env.PORT || 8080;
 
 const store = new MongoDBStore({
-  uri: process.env.Mongo_URI,
+  uri: process.env.MONGO_URI,
   collection: "sessions",
 });
 
 // log request
 // app.use(morgan('tiny'));
+
+const super_secret = process.env.SUPER_SECRET || "my super secret";
 
 // MongoDB Connection
 connectDB();
@@ -45,7 +47,7 @@ app.use("/js", express.static(path.resolve(__dirname, "assets/js")));
 
 app.use(
   session({
-    secret: "my secret",
+    secret: super_secret,
     resave: false,
     saveUninitialized: false,
     store: store,
